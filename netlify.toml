@@ -1,0 +1,19 @@
+# Netlify configuration for the Solpulsen CARE frontend (static SPA).
+# NOTE: This deploys only the Vite frontend. The Express/tRPC backend in server/
+# is NOT hosted here — API calls to /api/trpc will not work on Netlify alone.
+# The public landing page and the demo login (admin / admin123) work statically.
+
+[build]
+  # Build only the frontend (avoids bundling the Node server on Netlify).
+  command = "pnpm exec vite build"
+  # Vite outputs to dist/public (see vite.config.ts outDir).
+  publish = "dist/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# SPA fallback: let client-side routing (wouter) handle all routes.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
