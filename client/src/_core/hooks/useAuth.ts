@@ -1,0 +1,108 @@
+import { getLoginUrl } from "@/const";
+import { trpc } from "@/lib/trpc";
+import { TRPCClientError } from "@trpc/client";
+import { useCallback, useEffect, useMemo } from "react";
+
+type UseAuthOptions = {
+  redirectOnUnauthenticated?: boolean;
+  redirectPath?: string;
+};
+
+// Local demo bypass — lets you sign in as admin without a backend/DB.
+const FAKE_ADMIN_USER = {
+  openId: "fake-admin",
+  name: "Admin",
+  email: "admin@solpulsen.se",
+  role: "admin",
+  mustChangePassword: false,
+} as const;
+
+export function useAuth(options?: UseAuthOptions) {
+  const { redirectOnUnauthenticated = false, redirectPath = getLoginUrl() } =
+    options ?? {};
+  const utils = trpc.useUtils();
+  const fakeAdmin =
+    typeof window !== "undefined" &&
+    localStorage.getItem("fake-admin") === "1";
+
+  const meQuery = trpc.auth.me.useQuery(undefined, {
+    retry: false,
+    refetchOnWindowFocus: false,
+  });
+
+  const logoutMutation = trpc.auth.logout.useMutation({
+    onSuccess: () => {
+      utils.auth.me.setData(undefined, null);
+    },
+  });
+
+  const logout = useCallback(async () => {
+    try {
+      await logoutMutation.mutateAsync();
+    } catch (error: unknown) {
+      if (
+        error instanceof TRPCClientError &&
+        error.data?.code === "UNAUTHORIZED"
+      ) {
+        return;
+      }
+      throw error;
+    } finally {
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("fake-admin");
+      }
+      utils.auth.me.setData(undefined, null);
+      await utils.auth.me.invalidate();
+    }
+  }, [logoutMutation, utils]);
+
+  const state = useMemo(() => {
+    if (fakeAdmin) {
+      return {
+        user: FAKE_ADMIN_USER as unknown as NonNullable<typeof meQuery.data>,
+        loading: false,
+        error: null,
+        isAuthenticated: true,
+      };
+    }
+    localStorage.setItem(
+      "solpulsen-user-info",
+      JSON.stringify(meQuery.data)
+    );
+    return {
+      user: meQuery.data ?? null,
+      loading: meQuery.isLoading || logoutMutation.isPending,
+      error: meQuery.error ?? logoutMutation.error ?? null,
+      isAuthenticated: Boolean(meQuery.data),
+    };
+  }, [
+    fakeAdmin,
+    meQuery.data,
+    meQuery.error,
+    meQuery.isLoading,
+    logoutMutation.error,
+    logoutMutation.isPending,
+  ]);
+
+  useEffect(() => {
+    if (!redirectOnUnauthenticated) return;
+    if (meQuery.isLoading || logoutMutation.isPending) return;
+    if (state.user) return;
+    if (typeof window === "undefined") return;
+    if (window.location.pathname === redirectPath) return;
+
+    window.location.href = redirectPath
+  }, [
+    redirectOnUnauthenticated,
+    redirectPath,
+    logoutMutation.isPending,
+    meQuery.isLoading,
+    state.user,
+  ]);
+
+  return {
+    ...state,
+    refresh: () => meQuery.refetch(),
+    logout,
+  };
+}

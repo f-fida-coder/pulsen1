@@ -1,0 +1,3039 @@
+{
+  "version": "5",
+  "dialect": "mysql",
+  "id": "97bcee10-7d96-4014-8180-5a609bc28422",
+  "prevId": "5dbf6e1e-af7c-402a-b584-2eba2414cc8d",
+  "tables": {
+    "actions": {
+      "name": "actions",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "actionUserId": {
+          "name": "actionUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actionInsightId": {
+          "name": "actionInsightId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actionArticleId": {
+          "name": "actionArticleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "engActionType": {
+          "name": "engActionType",
+          "type": "enum('optimize_battery','schedule_charging','view_forecast','monitor_risk','adjust_load','sell_excess','custom')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actionPayload": {
+          "name": "actionPayload",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actionDescription": {
+          "name": "actionDescription",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "engActionStatus": {
+          "name": "engActionStatus",
+          "type": "enum('pending','approved','executed','failed','dismissed')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
+        "autoTriggered": {
+          "name": "autoTriggered",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "triggerReason": {
+          "name": "triggerReason",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actionExecutedAt": {
+          "name": "actionExecutedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "executionResult": {
+          "name": "executionResult",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "baselineCostSek": {
+          "name": "baselineCostSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actualCostSek": {
+          "name": "actualCostSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "savingsSek": {
+          "name": "savingsSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "savingsKwh": {
+          "name": "savingsKwh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "roiConfidence": {
+          "name": "roiConfidence",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "roiEstimated": {
+          "name": "roiEstimated",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": true
+        },
+        "actionCreatedAt": {
+          "name": "actionCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "actionUpdatedAt": {
+          "name": "actionUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "actions_id": {
+          "name": "actions_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "ai_insights": {
+      "name": "ai_insights",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "insightArticleId": {
+          "name": "insightArticleId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "insightText": {
+          "name": "insightText",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "impactType": {
+          "name": "impactType",
+          "type": "enum('price','savings','risk','opportunity')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'savings'"
+        },
+        "insightRecommendation": {
+          "name": "insightRecommendation",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "insightActionType": {
+          "name": "insightActionType",
+          "type": "enum('optimize_battery','schedule_charging','view_forecast','monitor_risk','none')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'none'"
+        },
+        "insightActionText": {
+          "name": "insightActionText",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "insightPersonalizedInsight": {
+          "name": "insightPersonalizedInsight",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "insightUserRegion": {
+          "name": "insightUserRegion",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "confidenceScore": {
+          "name": "confidenceScore",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 70
+        },
+        "insightCreatedAt": {
+          "name": "insightCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "ai_insights_id": {
+          "name": "ai_insights_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "alert_rules": {
+      "name": "alert_rules",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "arUserId": {
+          "name": "arUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arDeviceConfigId": {
+          "name": "arDeviceConfigId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "arName": {
+          "name": "arName",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arMetricKey": {
+          "name": "arMetricKey",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arOperator": {
+          "name": "arOperator",
+          "type": "enum('lt','gt','lte','gte','eq','neq')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arThreshold": {
+          "name": "arThreshold",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arSeverity": {
+          "name": "arSeverity",
+          "type": "enum('info','warning','critical')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'warning'"
+        },
+        "arMessage": {
+          "name": "arMessage",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "arIsActive": {
+          "name": "arIsActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "arCooldownMinutes": {
+          "name": "arCooldownMinutes",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 60
+        },
+        "arLastTriggeredAt": {
+          "name": "arLastTriggeredAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "arCreatedAt": {
+          "name": "arCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "arUpdatedAt": {
+          "name": "arUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "alert_rules_id": {
+          "name": "alert_rules_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "contracts": {
+      "name": "contracts",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "customerId": {
+          "name": "customerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contractType": {
+          "name": "contractType",
+          "type": "enum('care_basic','care_plus','care_platinum','installation','maintenance','lease','other')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'other'"
+        },
+        "contractStartDate": {
+          "name": "contractStartDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "contractEndDate": {
+          "name": "contractEndDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "monthlyCost": {
+          "name": "monthlyCost",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contractStatus": {
+          "name": "contractStatus",
+          "type": "enum('active','pending','expired','cancelled')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "contractDocumentUrl": {
+          "name": "contractDocumentUrl",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "signedAt": {
+          "name": "signedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contractNotes": {
+          "name": "contractNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "contractCreatedAt": {
+          "name": "contractCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "contractUpdatedAt": {
+          "name": "contractUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "contracts_id": {
+          "name": "contracts_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "customer_documents": {
+      "name": "customer_documents",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "cdUploadedBy": {
+          "name": "cdUploadedBy",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cdTargetUserId": {
+          "name": "cdTargetUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cdFilename": {
+          "name": "cdFilename",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cdFileKey": {
+          "name": "cdFileKey",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cdFileUrl": {
+          "name": "cdFileUrl",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "cdDocType": {
+          "name": "cdDocType",
+          "type": "enum('contract','warranty','invoice','service_report','installation_report','certificate','other')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'other'"
+        },
+        "cdDescription": {
+          "name": "cdDescription",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cdFileSizeBytes": {
+          "name": "cdFileSizeBytes",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "cdCreatedAt": {
+          "name": "cdCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "cdUpdatedAt": {
+          "name": "cdUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "customer_documents_id": {
+          "name": "customer_documents_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "device_configs": {
+      "name": "device_configs",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "dcUserId": {
+          "name": "dcUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dcDeviceType": {
+          "name": "dcDeviceType",
+          "type": "enum('battery','inverter','charger','meter')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dcDeviceName": {
+          "name": "dcDeviceName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dcProtocol": {
+          "name": "dcProtocol",
+          "type": "enum('solarman','modbus_tcp','modbus_rtu','http','mqtt')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dcSolarmanToken": {
+          "name": "dcSolarmanToken",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcSolarmanAppId": {
+          "name": "dcSolarmanAppId",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcSolarmanAppSecret": {
+          "name": "dcSolarmanAppSecret",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcDeviceSn": {
+          "name": "dcDeviceSn",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcLoggerId": {
+          "name": "dcLoggerId",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcModbusHost": {
+          "name": "dcModbusHost",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dcModbusPort": {
+          "name": "dcModbusPort",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 502
+        },
+        "dcModbusUnitId": {
+          "name": "dcModbusUnitId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 1
+        },
+        "dcMaxChargePower": {
+          "name": "dcMaxChargePower",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 5000
+        },
+        "dcMaxDischargePower": {
+          "name": "dcMaxDischargePower",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 5000
+        },
+        "dcMaxSocPercent": {
+          "name": "dcMaxSocPercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 95
+        },
+        "dcMinSocPercent": {
+          "name": "dcMinSocPercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 10
+        },
+        "dcIsActive": {
+          "name": "dcIsActive",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "dcCreatedAt": {
+          "name": "dcCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "dcUpdatedAt": {
+          "name": "dcUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "device_configs_id": {
+          "name": "device_configs_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "device_logs": {
+      "name": "device_logs",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "dlDeviceConfigId": {
+          "name": "dlDeviceConfigId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlActionId": {
+          "name": "dlActionId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlDeviceType": {
+          "name": "dlDeviceType",
+          "type": "enum('battery','inverter','charger','meter')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dlCommand": {
+          "name": "dlCommand",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dlRequestPayload": {
+          "name": "dlRequestPayload",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlDeviceResponse": {
+          "name": "dlDeviceResponse",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlSuccess": {
+          "name": "dlSuccess",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "dlErrorMessage": {
+          "name": "dlErrorMessage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlExecutionTimeMs": {
+          "name": "dlExecutionTimeMs",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "dlCreatedAt": {
+          "name": "dlCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "device_logs_id": {
+          "name": "device_logs_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "devices": {
+      "name": "devices",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "deviceType": {
+          "name": "deviceType",
+          "type": "enum('solar','battery','inverter','heat_pump','ev_charger','wind')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "manufacturer": {
+          "name": "manufacturer",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "model": {
+          "name": "model",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "serialNumber": {
+          "name": "serialNumber",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "deviceStatus": {
+          "name": "deviceStatus",
+          "type": "enum('online','offline','warning','error')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'online'"
+        },
+        "capacityKw": {
+          "name": "capacityKw",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastReading": {
+          "name": "lastReading",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "lastSeenAt": {
+          "name": "lastSeenAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "installedAt": {
+          "name": "installedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notes": {
+          "name": "notes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "devices_id": {
+          "name": "devices_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "energy_timeseries": {
+      "name": "energy_timeseries",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "etTimestamp": {
+          "name": "etTimestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "etUserId": {
+          "name": "etUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "etConfigId": {
+          "name": "etConfigId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "etConsumptionWh": {
+          "name": "etConsumptionWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etProductionWh": {
+          "name": "etProductionWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etBatteryChargeWh": {
+          "name": "etBatteryChargeWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etBatteryDischargeWh": {
+          "name": "etBatteryDischargeWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etGridImportWh": {
+          "name": "etGridImportWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etGridExportWh": {
+          "name": "etGridExportWh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "etBatterySocPercent": {
+          "name": "etBatterySocPercent",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "etSource": {
+          "name": "etSource",
+          "type": "enum('solarman','modbus','manual','simulated')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'simulated'"
+        },
+        "etCreatedAt": {
+          "name": "etCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "energy_timeseries_id": {
+          "name": "energy_timeseries_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "knowledge_articles": {
+      "name": "knowledge_articles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "kaAuthorId": {
+          "name": "kaAuthorId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kaTitle": {
+          "name": "kaTitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kaSlug": {
+          "name": "kaSlug",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kaExcerpt": {
+          "name": "kaExcerpt",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "kaContent": {
+          "name": "kaContent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "kaCategory": {
+          "name": "kaCategory",
+          "type": "enum('products','regulations','apps_services','technology','news','other')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'other'"
+        },
+        "kaTags": {
+          "name": "kaTags",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "kaImageUrl": {
+          "name": "kaImageUrl",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "kaPublished": {
+          "name": "kaPublished",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "kaPublishedAt": {
+          "name": "kaPublishedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "kaCreatedAt": {
+          "name": "kaCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "kaUpdatedAt": {
+          "name": "kaUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "knowledge_articles_id": {
+          "name": "knowledge_articles_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "knowledge_articles_kaSlug_unique": {
+          "name": "knowledge_articles_kaSlug_unique",
+          "columns": [
+            "kaSlug"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "news_articles": {
+      "name": "news_articles",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "articleTitle": {
+          "name": "articleTitle",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "articleSource": {
+          "name": "articleSource",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "articleUrl": {
+          "name": "articleUrl",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "articleImageUrl": {
+          "name": "articleImageUrl",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "articlePublishedAt": {
+          "name": "articlePublishedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "rawContent": {
+          "name": "rawContent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cleanContent": {
+          "name": "cleanContent",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "articleSummary": {
+          "name": "articleSummary",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "articleTags": {
+          "name": "articleTags",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "articleRegion": {
+          "name": "articleRegion",
+          "type": "enum('SE','NORDICS','EU','GLOBAL')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'GLOBAL'"
+        },
+        "actionType": {
+          "name": "actionType",
+          "type": "enum('optimize_battery','schedule_charging','view_forecast','monitor_risk','none')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'none'"
+        },
+        "actionText": {
+          "name": "actionText",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "personalizedInsight": {
+          "name": "personalizedInsight",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "relevanceScore": {
+          "name": "relevanceScore",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 50
+        },
+        "articleProcessed": {
+          "name": "articleProcessed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "articleCreatedAt": {
+          "name": "articleCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "news_articles_id": {
+          "name": "news_articles_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "news_articles_articleUrl_unique": {
+          "name": "news_articles_articleUrl_unique",
+          "columns": [
+            "articleUrl"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "notifications": {
+      "name": "notifications",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notifType": {
+          "name": "notifType",
+          "type": "enum('ai','energy','system','alert','ticket','info')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'info'"
+        },
+        "notifTitle": {
+          "name": "notifTitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notifMessage": {
+          "name": "notifMessage",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "notifPriority": {
+          "name": "notifPriority",
+          "type": "enum('normal','high')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'normal'"
+        },
+        "isRead": {
+          "name": "isRead",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "notifLink": {
+          "name": "notifLink",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "notifCreatedAt": {
+          "name": "notifCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "notifications_id": {
+          "name": "notifications_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "optimizationRuns": {
+      "name": "optimizationRuns",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "zone": {
+          "name": "zone",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "optDate": {
+          "name": "optDate",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "totalHours": {
+          "name": "totalHours",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "tomorrowIncluded": {
+          "name": "tomorrowIncluded",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "batteryCapacityKwh": {
+          "name": "batteryCapacityKwh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "batteryMaxPowerKw": {
+          "name": "batteryMaxPowerKw",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "panelKwp": {
+          "name": "panelKwp",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "netSavingsSek": {
+          "name": "netSavingsSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "arbitrageProfitSek": {
+          "name": "arbitrageProfitSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "peakShavingValueSek": {
+          "name": "peakShavingValueSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "selfConsumptionPct": {
+          "name": "selfConsumptionPct",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "baselineCostSek": {
+          "name": "baselineCostSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "optTotalCostSek": {
+          "name": "optTotalCostSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "avgChargePriceSek": {
+          "name": "avgChargePriceSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "avgDischargePriceSek": {
+          "name": "avgDischargePriceSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "scheduleJson": {
+          "name": "scheduleJson",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "actualNetSavingsSek": {
+          "name": "actualNetSavingsSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actualTotalCostSek": {
+          "name": "actualTotalCostSek",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "actualNotes": {
+          "name": "actualNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "optCreatedAt": {
+          "name": "optCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "optUpdatedAt": {
+          "name": "optUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "optimizationRuns_id": {
+          "name": "optimizationRuns_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "price_history": {
+      "name": "price_history",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "area": {
+          "name": "area",
+          "type": "enum('SE1','SE2','SE3','SE4')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "priceHour": {
+          "name": "priceHour",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "priceOre": {
+          "name": "priceOre",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "price_history_id": {
+          "name": "price_history_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "price_timeseries": {
+      "name": "price_timeseries",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "ptTimestamp": {
+          "name": "ptTimestamp",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ptRegion": {
+          "name": "ptRegion",
+          "type": "enum('SE1','SE2','SE3','SE4')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ptPriceSekPerKwh": {
+          "name": "ptPriceSekPerKwh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "ptSource": {
+          "name": "ptSource",
+          "type": "varchar(50)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'elprisetjustnu'"
+        },
+        "ptCreatedAt": {
+          "name": "ptCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "price_timeseries_id": {
+          "name": "price_timeseries_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "referrals": {
+      "name": "referrals",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "referrerId": {
+          "name": "referrerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "referralCode": {
+          "name": "referralCode",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "referredEmail": {
+          "name": "referredEmail",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "referredUserId": {
+          "name": "referredUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "referralStatus": {
+          "name": "referralStatus",
+          "type": "enum('pending','registered','converted','rewarded')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
+        "rewardAmount": {
+          "name": "rewardAmount",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "rewardPaid": {
+          "name": "rewardPaid",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "referralCreatedAt": {
+          "name": "referralCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "referralUpdatedAt": {
+          "name": "referralUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "referrals_id": {
+          "name": "referrals_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "referrals_referralCode_unique": {
+          "name": "referrals_referralCode_unique",
+          "columns": [
+            "referralCode"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "reports": {
+      "name": "reports",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "configId": {
+          "name": "configId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "reportType": {
+          "name": "reportType",
+          "type": "enum('wind_potential','roi_summary','monthly_savings')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "title": {
+          "name": "title",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "fileUrl": {
+          "name": "fileUrl",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fileKey": {
+          "name": "fileKey",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "parameters": {
+          "name": "parameters",
+          "type": "json",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "reports_id": {
+          "name": "reports_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "savings_records": {
+      "name": "savings_records",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "configId": {
+          "name": "configId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "periodStart": {
+          "name": "periodStart",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "periodEnd": {
+          "name": "periodEnd",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "solarSavings": {
+          "name": "solarSavings",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "windSavings": {
+          "name": "windSavings",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "batterySavings": {
+          "name": "batterySavings",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "priceSavings": {
+          "name": "priceSavings",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "totalDecisions": {
+          "name": "totalDecisions",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "correctedDecisions": {
+          "name": "correctedDecisions",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "savings_records_id": {
+          "name": "savings_records_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "schedulerConfigs": {
+      "name": "schedulerConfigs",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "enabled": {
+          "name": "enabled",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "schedulerZone": {
+          "name": "schedulerZone",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'SE3'"
+        },
+        "schedulerLat": {
+          "name": "schedulerLat",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 5933
+        },
+        "schedulerLon": {
+          "name": "schedulerLon",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 1807
+        },
+        "schedulerBatteryCapacityKwh": {
+          "name": "schedulerBatteryCapacityKwh",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 15
+        },
+        "schedulerBatteryMaxPowerKw": {
+          "name": "schedulerBatteryMaxPowerKw",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 5
+        },
+        "schedulerPanelKwp": {
+          "name": "schedulerPanelKwp",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 10
+        },
+        "schedulerHasHeatPump": {
+          "name": "schedulerHasHeatPump",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "schedulerHasEv": {
+          "name": "schedulerHasEv",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "schedulerPeakShaving": {
+          "name": "schedulerPeakShaving",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "schedulerPeakLimitKw": {
+          "name": "schedulerPeakLimitKw",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": 11
+        },
+        "schedulerLastRunAt": {
+          "name": "schedulerLastRunAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "schedulerLastRunStatus": {
+          "name": "schedulerLastRunStatus",
+          "type": "enum('success','failed','pending')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'pending'"
+        },
+        "schedulerLastRunError": {
+          "name": "schedulerLastRunError",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "schedulerCreatedAt": {
+          "name": "schedulerCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "schedulerUpdatedAt": {
+          "name": "schedulerUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "schedulerConfigs_id": {
+          "name": "schedulerConfigs_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "system_configs": {
+      "name": "system_configs",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "isDefault": {
+          "name": "isDefault",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "batteryCapacity": {
+          "name": "batteryCapacity",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'0'"
+        },
+        "batteryDoD": {
+          "name": "batteryDoD",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 80
+        },
+        "batteryEfficiency": {
+          "name": "batteryEfficiency",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 92
+        },
+        "solarCapacity": {
+          "name": "solarCapacity",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'0'"
+        },
+        "roofTilt": {
+          "name": "roofTilt",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 30
+        },
+        "roofOrientation": {
+          "name": "roofOrientation",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 180
+        },
+        "shading": {
+          "name": "shading",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "hasWind": {
+          "name": "hasWind",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "windCapacity": {
+          "name": "windCapacity",
+          "type": "decimal(10,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'0'"
+        },
+        "hubHeight": {
+          "name": "hubHeight",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 30
+        },
+        "annualConsumption": {
+          "name": "annualConsumption",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 20000
+        },
+        "hasEV": {
+          "name": "hasEV",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": false
+        },
+        "evConsumption": {
+          "name": "evConsumption",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": 0
+        },
+        "heatingType": {
+          "name": "heatingType",
+          "type": "enum('heatpump','direct','district','other')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'heatpump'"
+        },
+        "electricityArea": {
+          "name": "electricityArea",
+          "type": "enum('SE1','SE2','SE3','SE4')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'SE3'"
+        },
+        "latitude": {
+          "name": "latitude",
+          "type": "decimal(10,6)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "longitude": {
+          "name": "longitude",
+          "type": "decimal(10,6)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "address": {
+          "name": "address",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "system_configs_id": {
+          "name": "system_configs_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "system_health_events": {
+      "name": "system_health_events",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "sheUserId": {
+          "name": "sheUserId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sheDeviceConfigId": {
+          "name": "sheDeviceConfigId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheEventType": {
+          "name": "sheEventType",
+          "type": "enum('heartbeat','offline','online','anomaly','alert_triggered','alert_resolved','threshold_breach')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sheSeverity": {
+          "name": "sheSeverity",
+          "type": "enum('info','warning','critical')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'info'"
+        },
+        "sheTitle": {
+          "name": "sheTitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "sheMessage": {
+          "name": "sheMessage",
+          "type": "varchar(1000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheMetricKey": {
+          "name": "sheMetricKey",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheMetricValue": {
+          "name": "sheMetricValue",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheMetricUnit": {
+          "name": "sheMetricUnit",
+          "type": "varchar(30)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheResolved": {
+          "name": "sheResolved",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "sheResolvedAt": {
+          "name": "sheResolvedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "sheCreatedAt": {
+          "name": "sheCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "system_health_events_id": {
+          "name": "system_health_events_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "ticketComments": {
+      "name": "ticketComments",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "ticketId": {
+          "name": "ticketId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "authorId": {
+          "name": "authorId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "authorName": {
+          "name": "authorName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "content": {
+          "name": "content",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "isInternal": {
+          "name": "isInternal",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": false
+        },
+        "commentCreatedAt": {
+          "name": "commentCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "ticketComments_id": {
+          "name": "ticketComments_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "tickets": {
+      "name": "tickets",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "ticketNumber": {
+          "name": "ticketNumber",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "subject": {
+          "name": "subject",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ticketStatus": {
+          "name": "ticketStatus",
+          "type": "enum('open','in_progress','waiting','resolved','closed')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'open'"
+        },
+        "ticketPriority": {
+          "name": "ticketPriority",
+          "type": "enum('low','medium','high','urgent')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'medium'"
+        },
+        "ticketCategory": {
+          "name": "ticketCategory",
+          "type": "enum('technical','billing','installation','general','warranty')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'general'"
+        },
+        "customerId": {
+          "name": "customerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "assignedToId": {
+          "name": "assignedToId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "resolution": {
+          "name": "resolution",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "resolvedAt": {
+          "name": "resolvedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "closedAt": {
+          "name": "closedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "slaDeadline": {
+          "name": "slaDeadline",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "ticketCareTier": {
+          "name": "ticketCareTier",
+          "type": "enum('basic','plus','platinum')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'basic'"
+        },
+        "ticketCreatedAt": {
+          "name": "ticketCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "ticketUpdatedAt": {
+          "name": "ticketUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "tickets_id": {
+          "name": "tickets_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "tickets_ticketNumber_unique": {
+          "name": "tickets_ticketNumber_unique",
+          "columns": [
+            "ticketNumber"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "users": {
+      "name": "users",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "openId": {
+          "name": "openId",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "loginMethod": {
+          "name": "loginMethod",
+          "type": "varchar(64)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "role": {
+          "name": "role",
+          "type": "enum('user','admin')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'user'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "updatedAt": {
+          "name": "updatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        },
+        "lastSignedIn": {
+          "name": "lastSignedIn",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "users_id": {
+          "name": "users_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "users_openId_unique": {
+          "name": "users_openId_unique",
+          "columns": [
+            "openId"
+          ]
+        }
+      },
+      "checkConstraint": {}
+    },
+    "warranties": {
+      "name": "warranties",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "customerId": {
+          "name": "customerId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "productName": {
+          "name": "productName",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "productType": {
+          "name": "productType",
+          "type": "enum('solar_panel','inverter','battery','ev_charger','heat_pump','installation','other')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'other'"
+        },
+        "warrantySerialNumber": {
+          "name": "warrantySerialNumber",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warrantyStartDate": {
+          "name": "warrantyStartDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "warrantyEndDate": {
+          "name": "warrantyEndDate",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "provider": {
+          "name": "provider",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warrantyDocumentUrl": {
+          "name": "warrantyDocumentUrl",
+          "type": "varchar(500)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warrantyStatus": {
+          "name": "warrantyStatus",
+          "type": "enum('active','expired','claimed')",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'active'"
+        },
+        "warrantyNotes": {
+          "name": "warrantyNotes",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "warrantyCreatedAt": {
+          "name": "warrantyCreatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        },
+        "warrantyUpdatedAt": {
+          "name": "warrantyUpdatedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "onUpdate": true,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "warranties_id": {
+          "name": "warranties_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    },
+    "weather_history": {
+      "name": "weather_history",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "configId": {
+          "name": "configId",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "recordedAt": {
+          "name": "recordedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "windSpeed": {
+          "name": "windSpeed",
+          "type": "decimal(5,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "windDirection": {
+          "name": "windDirection",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "windGust": {
+          "name": "windGust",
+          "type": "decimal(5,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "temperature": {
+          "name": "temperature",
+          "type": "decimal(5,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "cloudCover": {
+          "name": "cloudCover",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "humidity": {
+          "name": "humidity",
+          "type": "int",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "apiWindSpeed": {
+          "name": "apiWindSpeed",
+          "type": "decimal(5,2)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "source": {
+          "name": "source",
+          "type": "enum('local_station','smhi','manual')",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'smhi'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "(now())"
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {
+        "weather_history_id": {
+          "name": "weather_history_id",
+          "columns": [
+            "id"
+          ]
+        }
+      },
+      "uniqueConstraints": {},
+      "checkConstraint": {}
+    }
+  },
+  "views": {},
+  "_meta": {
+    "schemas": {},
+    "tables": {},
+    "columns": {}
+  },
+  "internal": {
+    "tables": {},
+    "indexes": {}
+  }
+}
